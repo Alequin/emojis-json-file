@@ -4,7 +4,7 @@
   "description": "",
   "main": "play.js",
   "scripts": {
-    "build-emojis": "node ./build-emoji-json-file"
+    "build-emojis": "node ./src/build-emoji-json-file"
   },
   "keywords": [],
   "author": "",

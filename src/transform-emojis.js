@@ -1,34 +1,18 @@
 const fs = require("fs");
 const { snakeCase, flow } = require("lodash");
-
-const main = () => {
-  fs.writeFileSync(
-    `./emojis.json`,
-    JSON.stringify(transformEmojis(`./raw-emojis.txt`))
-  );
-};
-
-const skinTones = [
-  "light_skin_tone",
-  "dark_skin_tone",
-  "medium_skin_tone",
-  "medium_light_skin_tone",
-  "medium_dark_skin_tone"
-];
+const skinToneNames = require("./skin-tone-names");
 
 const NEW_LINE_CHARACTERS = /(?:\\[rn]|[\r\n]+)+/g;
 
-const transformEmojis = filePath => {
+const transformEmojis = rawEmojis => {
   const groupName = valueTracker(nextGroupName);
   const subgroupName = valueTracker(nextSubgroupName);
 
-  return fs
-    .readFileSync(filePath)
-    .toString()
+  return rawEmojis
     .replace(NEW_LINE_CHARACTERS, "~")
     .split("~")
     .filter(line => line)
-    .map(line => {
+    .map((line, index) => {
       const currentGroupName = groupName(line);
       const currentSubgroupName = subgroupName(line);
       if (!startsWithNumber(line)) return null;
@@ -41,7 +25,7 @@ const transformEmojis = filePath => {
         name,
         group: currentGroupName,
         subgroup: currentSubgroupName,
-        skinTone: skinTones.reduce(
+        skinTone: skinToneNames.reduce(
           (currentTone, tone) => (name.includes(tone) ? tone : currentTone),
           "neutral"
         )
@@ -80,4 +64,4 @@ const extractDetailsFromLine = flow(
   })
 );
 
-if (require.main === module) main();
+module.exports = transformEmojis;
