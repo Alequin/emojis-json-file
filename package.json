@@ -1,0 +1,15 @@
+{
+  "name": "emojis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "play.js",
+  "scripts": {
+    "build-emojis": "node ./build-emoji-json-file"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  }
+}
