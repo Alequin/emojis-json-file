@@ -23,6 +23,7 @@ const transformEmojis = rawEmojis => {
       return {
         emoji,
         name,
+        displayName: name.replace(/_/g, " "),
         group: currentGroupName,
         subgroup: currentSubgroupName,
         skinTone: skinToneNames.reduce(
@@ -60,7 +61,7 @@ const extractDetailsFromLine = flow(
   line => line.trim().split(" "),
   ([emoji, ...names]) => ({
     emoji,
-    name: names.join("_").replace(":", "").replace(/-/g, "_")
+    name: names.join("_").replace(":", "").replace(/-/g, "_").toLowerCase()
   })
 );
 
